@@ -8,15 +8,52 @@
         <title>Coding Quiz</title>
     </head>
     <body>
-        <h1>Click Start to begin Coding Quiz</h1>
-        <p>In this quiz, you will be giving one minute to answer five questions. Once you get a question right then you move on to the next. If you get a question wrong then you will remain on that question with ten seconds deducted from the time limit. Go till either you finish the quiz or the time runs out. Good Luck</p>
-        <div class="clearfix">
-            <div id="msg"></div>
-            <button id="Start">Start</button>
+        <div class="start-btn"><button>Click to Start Game</button></div>
+        <div class="info-box">
+            <div class="info-title">
+                <span>Rules</span>
             </div>
-        <div id="quiz"></div>
-        <button id="submit">Get Results</button>
-        <div id="results"></div>
-        <script src="Assets/js/script.js" ></script>
+            <div class="info-list">
+                <div class="info">1. Only <span>15 seconds</span> per question.</div>
+                <div class="info">2. You will not be able to change answer after selection.</div>
+            </div>
+            <div class="buttons">
+                <button class="quit-btn">Exit</button>
+                <button class="restart-btn">Continue</button>
+            </div>
+        </div>
+        <div class="game-box"></div>
+            <header>
+                <div class="title">Coding Quiz</div>
+                <div class="timer">
+                <div class="timer-txt">Time Left</div>
+                <div class="timer-sec">15</div>
+            </div>
+            <div class="timer-line"></div>
+            </header>
+            <section>
+                <div class="option-list"></div>
+            </section>
+            <footer>
+                <div class="total-que"></div>
+                <button class="next-btn">Next Question</button>
+            </footer>
+        </div>
+        <div class="results-box">
+            <div class="icon">
+                <i class="fas fa-glass-cheers"></i>
+                <i class="fas fa-glass-cheers"></i>
+                <i class="fas fa-glass-cheers"></i>
+            </div>
+            <div class="complete-txt">Quiz Completed</div>
+            <div class="score-txt">
+                <span>You got <p>3</p> out of <p>4</p></span>
+            </div>
+            <div class="buttons">
+                <button class="quit-btn">Quit Game</button>
+            </div>
+        </div>
+        <script src="./Assets/js/script.js"></script>
+        <script src="./Assets/js/questions.js"></script>
     </body>
 </html>
