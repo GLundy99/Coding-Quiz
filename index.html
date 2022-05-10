@@ -8,55 +8,38 @@
         <title>Coding Quiz</title>
     </head>
     <body>
-        <div class="start-btn"><button>Click to Start Game</button></div>
-        <div class="info-box">
-            <div class="info-title">
-                <span>Rules</span>
+        <div class="container">
+            <div id="quiz" class="hide">
+                <div id="question">Questions</div>
+                <div id="answer-btns" class="btn-grid">
+                    <button class="btn"></button>
+                    <button class="btn"></button>
+                    <button class="btn"></button>
+                    <button class="btn"></button>
+                </div>
             </div>
-            <div class="info-list">
-                <div class="info">1. Only <span>15 seconds</span> per question.</div>
-                <div class="info">2. You will not be able to change answer after selection.</div>
+            <div class="controls">
+                <button id="start-btn" class="btn btn-primary">Start Quiz</button>
             </div>
-            <div class="buttons">
-                <button class="quit-btn">Exit</button>
-                <button class="restart-btn">Continue</button>
+            <div id="scoreboard">
+                <h3>TOTAL POINTS:</h3><h3 id="points">0</h3>
+                <div class="time-container">
+                <h3>SECONDS REMAINING:</h3><h3 id="timer">100</h3>
+                </div>
             </div>
-            <div class="buttons">
-                <button class="next-btn">Next</button>
+            <div class="submit-score hide">
+                <form>
+                    <label for="initials">Enter Initials:</label><br>
+                    <input type="text" id="initals" name="initials">
+                    <input type="submit" id="submit-button" value="Submit to High Scores">
+                </form>
             </div>
-        </div>
-        <div class="game-box"></div>
-            <header>
-                <div class="title">Coding Quiz</div>
-                <div class="timer">
-                <div class="timer-txt">Time Left</div>
-                <div class="timer-sec">15</div>
+            <div id="high-scores" class="hide">
+                <ul id="score-list">
+                    
+                </ul>
             </div>
-            <div class="timer-line"></div>
-            </header>
-            <section>
-                <div class="option-list"></div>
-            </section>
-            <footer>
-                <div class="total-que"></div>
-                <button class="next-btn">Next Question</button>
-            </footer>
-        </div>
-        <div class="results-box">
-            <div class="icon">
-                <i class="fas fa-glass-cheers"></i>
-                <i class="fas fa-glass-cheers"></i>
-                <i class="fas fa-glass-cheers"></i>
-            </div>
-            <div class="complete-txt">Quiz Completed</div>
-            <div class="score-txt">
-                <span>You got <p>3</p> out of <p>4</p></span>
-            </div>
-            <div class="buttons">
-                <button class="quit-btn">Quit Game</button>
-            </div>
-        </div>
-        <script src="./Assets/js/script.js"></script>
-        <script src="./Assets/js/questions.js"></script>
+        </div>   
+     <script src="./Assets/js/script.js"></script>    
     </body>
 </html>

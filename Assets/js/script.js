@@ -1,195 +1,140 @@
-// Get handle on all buttons
-const startButton = document.querySelector(".start-btn button");
-const infoButton = document.querySelector(".info-box");
-const quitButton = infoButton.querySelector(".buttons .quit-btn");
-const continueButton = infoButton.querySelector(".buttons .restart-btn");
-const gameBox = document.querySelector(".game-box");
-const nextButton = gameBox.querySelector(".next-btn");
-const optionText = document.querySelector(".option-list");
-const timeCounter = gameBox.querySelector(".timer .timer-sec");
-const timeCounterLine = gameBox.querySelector("header .time-line");
-const resultBox = document.querySelector(".result-box");
-//const restartGame = resultBox.querySelector(".buttons .restart-btn");
-//const quitGame = resultBox.querySelector(".buttons .quit-btn");
-// Set current question to index 0 
-let questionCount = 0;
-// Set current question counter to 1
-let questionNumber = 1;
-// Set Current time to 
-let counter;
-let timeValue = 15;
-let timerLineValue = 0;
-let userScore = 0;
-let checkIcon ='<div class="icon check"><i class="fas fa-check"></i></div>';
-let xIcon ='<div class="icon x"><i class="fas fa-times"></i></div>';
-// Once start game button clicked
-startButton.onclick = ()=>{
-    //changes opacity to be visible
-    infoButton.classList.add("activeInfo")
-}
+const quizE1 = document.querySelector("#quiz");
+const questionE1 = document.querySelector("#question")
+const startButton = document.querySelector("#start-btn")
+const answerBtnE1 = document.querySelector("#answer-btns")
+let scoreCounter = document.querySelector("#points")
+const timer = document.querySelector("#timer")
+const timeContainer = document.querySelector(".time-container")
+const highScoreForm = document.querySelector(".submit-score")
+const initialsInput = document.querySelector("#initials")
+const submitButton = document.querySelector("#submit-button")
+const scoresList = document.querySelector("#score-list")
+const scoresContainer = document.querySelector("#high-scores")
+var secondsLeft = 100;
 
-// Once Continue button is clicked
-continueButton.onclick = ()=>{
-    infoButton.classList.remove("activeInfo");
-    //show the Game Box
-    gameBox.classList.add("activeGame");
-    // Call showQuestions function
-    showQuestions(questionCount);
-    // Call queCounter function to show new question number
-    queCounter(questionNumber);
-    // Call timer function, clear counter value
-    clearInterval(counter);
-    startTimer(timeValue);
-    startTimerLine(timerLineValue);
-}
-
-//once Exit game button clicked
-// quitGame.onclick = ()=>{
-//     //will change opacity to not visble
-//     window.location.reload();
-//     infoButton.classList.remove("activeInfo");
-// }
-// restartGame.onclick = ()=>{
-
-//     resultBox.classList.remove("activeResult");
-//     gameBox.classList.add("activeGame");
-//     questionCount = 0;
-//     questionNumber = 1;
-//     counter;
-//     timeValue = 15;
-//     timerLineValue = 0;
-//     userScore = 0;
-//     showQuestions(questionCount);
-//     queCounter(questionNumber);
-//     clearInterval(counter);
-//     startTimer(timeValue);
-//     clearInterval(timerLineValue);
-//     startTimerLine(timerLineValue);
-//     nextButton.style.display = "none";
-
-// }
-// Once Next button is clicked
-nextButton.onclick = ()=>{
-    if(questionCount < questions.length -1){
-        questionCount++;
-        questionNumber++;
-        // Show correct question
-        showQuestions(questionCount);
-        // Update our question counter in footer
-        queCounter(questionNumber);
-        // Once next button is pressed Time is set back to timeValue and restarts countdown
-        clearInterval(counter);
-        startTimer(timeValue);
-        clearInterval(timerLineValue);
-        startTimerLine(timerLineValue);
-
-    }else{
-        clearInterval(counter);
-        clearInterval(questionNumber);
-        clearInterval(timerLineValue);
-        showResults();
-    }  
-}
-//give buttons an ID
-//put onclicks at very bottom 
-//add queryselector on the html page
-//define 64 as variable, let timevalue = questions.length
-//
-
-
-
-// Function to correctly display question number in footer 
-function queCounter(index){
-    const questionCounter = gameBox.querySelector(".total-que");
-    let totalQuestionCount = '<span><p>' + questionNumber + '</p>of<p>' + questions.length + '</p>Questions</span>';
-    //questionCounter.innerHTML = totalQuestionCount; 
-}
-// Get questions and options from our array
-// Dynamically create HTML elements for our questions
-function showQuestions(index){
-    const questionText = document.querySelector(".que-txt");
-    
-    // Displays the Question depending on index of our questions array, also display the question index
-    let queTag = '<span>'+ questions[index].qNumber + questions[index].question +'<span>';
-    // Displays the possible answers using the index of our questions and the index of the options
-    let optionTag = '<div class="option">' + questions[index].options[0] + '<span></span></div>'
-                    +'<div class="option">' + questions[index].options[1] + '<span></span></div>'
-                    +'<div class="option">' + questions[index].options[2] + '<span></span></div>'
-                    +'<div class="option">' + questions[index].options[3] + '<span></span></div>'
-    //questionText.innerHTML = queTag;
-    optionText.innerHTML = optionTag;
-    const option = optionText.querySelectorAll(".option");
-    for(let i = 0; i < option.length; i++){
-        option[i].setAttribute("onclick", "optionSelected(this)");
-    }
-}
-
-function optionSelected(answer){
-    // Time will pause once an answer is selected
-    clearInterval(counter);
-    clearInterval(counterLine);
-    // Handle on the user selected answer
-    let userAnswer = answer.textContent;
-    // Handle on the correct answer 
-    let correctAnswer = questions[questionCount].answer;
-    let allOptions = optionText.children.length;
-    // Compare the answers
-    if(userAnswer === correctAnswer){
-        answer.classList.add("correct");
-        userScore +=1;
-        // Will include our check icon for correct answer
-        answer.insertAdjacentHTML("beforeend", checkIcon);
-    }else{
-        answer.classList.add("incorrect");
-        answer.insertAdjacentHTML("beforeend", xIcon);
-
-        // If selected answer is incorrect then show correct answer regardless
-        for(let i = 0; i < allOptions; i++){
-            if(optionText.children[i].textContent === correctAnswer){
-                optionText.children[i].setAttribute("class", "option correct");
-                optionText.children[i].insertAdjacentHTML("beforeend", checkIcon);
-            }
+function setTime() {
+    var timerInterval = setInterval(function() {
+        secondsLeft--;
+        timer.innerHTML = secondsLeft
+        if (secondsLeft <= 0) {
+            clearInterval(timerInterval);
+            gameOver()
         }
-    }
-
-    // Disable options once user selects an answer
-    for (let i = 0; i < allOptions; i++) {
-        optionText.children[i].classList.add("disable");
-    }
-    // Only display next button once user has selected an answer
-    //nextButton.style.display = "block";
+    }, 1000)
 }
 
+function gameOver() {
+    quizE1.classList.add("hide")
+    timeContainer.classList.add("hide")
+    highScoreForm.classList.remove("hide")
+    alert("Game Over")
+}
 
-function startTimer(time){
-    counter = setInterval(timer, 1000);
-    function timer(){
-        //timeCounter.textContent = time;
-        time--;
-        // Prevent timer from going negative
-        if(time < 0){
-            clearInterval(counter);
-            timeCounter.textContent = "00";
-        }
+let questions = [
+    {
+    question: "Var stands for what?",
+    answers: ["Variable", "Variant", "Var", "Varment"],
+    correctAnswer: "Variable"
+    },
+    {   
+    question: "What folder does the css file go in?",
+    answers: ["html", "assets", "css", "readme"],
+    correctAnswer: "assets"
+    },
+    {
+    question: "Are the Minnesota Wild going to win the Stanley Cup this year?",
+    answers: ["Yes", "No", "Maybe", "Probably Not"],
+    correctAnswer: "Yes"
+    },
+    {
+    question: "What does CSS stand for?",
+    answers: ["Cascading Style Sheet", "Coding Style Systems", "Cooper System Setup", "Coding Structer Standered"],
+    correctAnswer: "Cascading Style Sheet"
+    }
+]
+
+function randomize(array) {
+    let currentIndex = array.length, randomIndex;
+    while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex)
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
+}
+
+startButton.addEventListener("click", startQuiz)
+
+function startQuiz() {
+    setTime();
+    startButton.classList.add("hide");
+    randomize(questions);
+    currentIndex = 0;
+    quizE1.classList.remove("hide");
+    getNewQuestion();
+}
+
+function getNewQuestion() {
+    clearQuestion();
+    showQuestion(questions[currentIndex])
+}
+
+function clearQuestion() {
+    while (answerBtnE1.firstChild) {
+        answerBtnE1.removeChild(answerBtnE1.firstChild)
     }
 }
 
-function startTimerLine(time){
-    counterLine = setInterval(timer, 29);
-    function timer(){
-        time += 1;
-        //timeCounterLine.style.width = time + "px";
-        if(time > 549){
-            clearInterval(counterLine);
-        }
+function showQuestion(question) {
+    questionE1.textContent = question.question;
+    question.answers.forEach(answer => {
+        let button = document.createElement("button");
+        button.innerHTML = answer;
+        button.addEventListener("click", selectAnswer);
+        answerBtnE1.appendChild(button);
+    })
+};
+
+function selectAnswer(event) {
+    var choice = event.target;
+    var correctAnswer = questions[currentIndex].correctAnswer;
+    if (choice.textContent === correctAnswer) {
+        console.log("Correct")
+        alert("Correct");
+        scoreCounter.textContent++;
+    } else {
+        console.log("Incorrect")
+        alert("Incorrect, 10 seconds deducted from timer");
+        secondsLeft-=10
+    }
+    if (questions.length > currentIndex + 1) {
+        currentIndex++;
+        getNewQuestion();
+    } else {
+        gameOver();
     }
 }
 
-function showResults(){
-    infoButton.classList.remove("activeInfo");
-    gameBox.classList.remove("activeGame");
-    resultBox.classList.add("activeResult");
-    const scoreText = resultBox.querySelector(".score-txt");
-    let scoreTag = '<span>You scored <p>' + userScore + '</p> out of <p>' + questions.length + '</p></span>';
-    scoreText.innerHTML = scoreTag;
+submitButton.addEventListener("Click", function(event) {
+    event.preventDefault();
+
+    var initials = document.querySelector("#initials").value();
+    if (initials === "") {
+        alert("Fill in initials");
+    } else {
+        alert("Submittion Successful")
+    }
+
+    localStorage.setItem("initials", initials);
+    renderHighScore()
+    scoresContainer.classList.remove("hide");
+})
+
+function renderHighScore() {
+    var initials = localStorage.getItem("initials");
+
+    if (!initials) {
+        return;
+    }
+    scoresList.createElement("<li>")
 }
