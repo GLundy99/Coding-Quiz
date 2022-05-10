@@ -92,6 +92,8 @@ nextButton.onclick = ()=>{
 }
 //give buttons an ID
 //put onclicks at very bottom 
+//add queryselector on the html page
+//define 64 as variable, let timevalue = questions.length
 //
 
 
